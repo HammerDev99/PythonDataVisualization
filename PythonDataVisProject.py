@@ -46,7 +46,7 @@ print(dfFinal.shape)
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
+#import matplotlib.dates as mdates
 mpl.style.use('ggplot')#estilos de la representacion
 
 #ordenamos el index
@@ -65,16 +65,3 @@ plt.ylabel('Concentración de PM10 en µg/m3')
 
 plt.show()
 
-#trabajo con datos polyfit Ajuste polinomial de mínimos cuadrados.
-#Ajuste un polinomio de grados grados a puntos (x, y) . Devuelve un 
-#vector de coeficientes p que minimiza el error al cuadrado en el 
-#orden deg , deg-1 , ... 0 .p(x) = p[0] * x**deg + ... + p[deg]
-
-#cambiar topo de dato columna concentracion
-dfFinal['concentracion'] = dfFinal['concentracion'].astype(str)
-print(dfFinal.dtypes)
-
-x = dfFinal['fecha']
-y = dfFinal['concentracion']
-fit = np.polyfit(x, y, deg=1)
-fit
