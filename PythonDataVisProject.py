@@ -1,7 +1,13 @@
+# %% [markdown]
+# # Python Data Visualization
+# 
+# ## Importar librerias y captura de datos de la web
+
+# %%
 import numpy as np
 import pandas as pd
-
 import requests
+
 from io import StringIO
 
 #captura de datos de la web
@@ -13,12 +19,12 @@ url = requests.get(dwn_url).text
 csv_raw = StringIO(url)
 df = pd.read_csv(csv_raw)
 
-#print(df.head())
-#df.iloc[:,[0,12,13,14]]
-#print(df.columns)
-#print(df.shape)
-#print(df.columns)
+# %% [markdown]
+# ## Ordenar el df dejando solo los datos que se relacionen a PM10 (particulas en suspension)
+# 
+# Se extraer los datos mas importantes fecha y concentracion (pm10) con la función drop
 
+# %%
 df.drop(['Autoridad Ambiental', 'Nombre de la estaciÃ³n',
        'TecnologÃ­a', 'Latitud', 'Longitud', 'CÃ³digo del departamento',
        'Departamento', 'CÃ³digo del municipio', 'Nombre del municipio',
@@ -27,23 +33,36 @@ df.drop(['Autoridad Ambiental', 'Nombre de la estaciÃ³n',
 
 #df despues del drop
 df.columns = ['fecha','variable','unidades','concentracion']
-print(df.columns)
-print(df.shape)
 
-#Ordenar el df dejando solo los datos que se relacionen a PM10 (particulas en suspension)
+# %% [markdown]
+# ## Columnas del DF
+
+# %%
+df.columns
+
+# %% [markdown]
+# ## Dimension del DF
+
+# %%
+df.shape
+
+# %% [markdown]
+# ## Se filtran los datos que contengan valores de PM10
+
+# %%
 dfFinal = df.drop(df[df['variable']!='PM10'].index)
-#renombrar valor de unidades PENDIENTE
 
-#ordenar indice de fila PENDIENTE
-
-#extraer los datos mas importantes fecha y concentracion (pm10)
+# %%
 dfFinal.drop(['variable','unidades'], axis=1, inplace=True)
 
-print(dfFinal)
-print(dfFinal.shape)
+# %%
+dfFinal
+dfFinal.shape
 
-#Finaliza la captura de datos y empieza la creacion de la visualizacion
+# %% [markdown]
+# ## Finaliza la captura de datos y empieza la creacion de la visualizacion
 
+# %%
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 #import matplotlib.dates as mdates
@@ -58,10 +77,7 @@ dfFinal.plot(kind='scatter', x='fecha', y='concentracion', figsize=(10, 6), colo
 
 plt.title('Concentración de Particulas en suspensión durante el año 2014 en el Municipio de Segovia')
 plt.xlabel('Fecha')
+plt.xticks(rotation=90)
 plt.ylabel('Concentración de PM10 en µg/m3')
 
-#Ordenar eje x formaeando las fechas solo con dia y mes PENDIENTE
-#ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
-
-plt.show()
 
